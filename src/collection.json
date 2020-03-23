@@ -1,0 +1,14 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "query": {
+      "description": "Generate Query Service",
+      "factory": "./query/index#genQuery",
+      "schema": "./query/schema.json"
+    },
+    "mutation": {
+      "description": "Generate Mutation Service",
+      "factory": "./mutation/index#genMutation"
+    }
+  }
+}
