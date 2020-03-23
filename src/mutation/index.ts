@@ -70,10 +70,6 @@ export function addProvidersAndExportStatementToNgModule(
       providersArray[0].end - 1,
       `  ${classifiedName},\n      `
     );
-    addProviderRecorder.insertLeft(
-      importServiceChange.pos,
-      importServiceChange.toAdd
-    );
     _tree.commitUpdate(addProviderRecorder);
 
     source = readIntoSourceFile(_tree, modulePath);
