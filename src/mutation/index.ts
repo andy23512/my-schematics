@@ -68,7 +68,7 @@ export function addProvidersAndExportStatementToNgModule(
     );
     addProviderRecorder.insertLeft(
       providersArray[0].end - 1,
-      `        ${classifiedName},\n`
+      `  ${classifiedName},\n      `
     );
     addProviderRecorder.insertLeft(
       importServiceChange.pos,
@@ -80,7 +80,7 @@ export function addProvidersAndExportStatementToNgModule(
     const exportRecorder = _tree.beginUpdate(modulePath);
     exportRecorder.insertLeft(
       source.end,
-      `\nexport { ${classifiedName} } from '${relativePath}'`
+      `export { ${classifiedName} } from '${relativePath}'`
     );
     _tree.commitUpdate(exportRecorder);
 

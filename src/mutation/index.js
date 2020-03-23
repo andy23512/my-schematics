@@ -30,12 +30,12 @@ function addProvidersAndExportStatementToNgModule(_options) {
         source = readIntoSourceFile(_tree, modulePath);
         const addProviderRecorder = _tree.beginUpdate(modulePath);
         const providersArray = tsquery_1.tsquery(source, 'Identifier[name=providers] ~ ArrayLiteralExpression', { visitAllChildren: true });
-        addProviderRecorder.insertLeft(providersArray[0].end - 1, `\n         ${classifiedName},\n`);
+        addProviderRecorder.insertLeft(providersArray[0].end - 1, `  ${classifiedName},\n      `);
         addProviderRecorder.insertLeft(importServiceChange.pos, importServiceChange.toAdd);
         _tree.commitUpdate(addProviderRecorder);
         source = readIntoSourceFile(_tree, modulePath);
         const exportRecorder = _tree.beginUpdate(modulePath);
-        exportRecorder.insertLeft(source.end, `\nexport { ${classifiedName} } from '${relativePath}'`);
+        exportRecorder.insertLeft(source.end, `export { ${classifiedName} } from '${relativePath}'`);
         _tree.commitUpdate(exportRecorder);
         return _tree;
     };
