@@ -68,7 +68,7 @@ export function addProvidersAndExportStatementToNgModule(
     );
     addProviderRecorder.insertLeft(
       providersArray[0].end - 1,
-      `\n         ${classifiedName},\n`
+      `\n        ${classifiedName},\n`
     );
     addProviderRecorder.insertLeft(
       importServiceChange.pos,

@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/schema",
   "id": "graphql-service-schematics-query",
-  "title": "GraphQL Service Schematic query schematic",
+  "title": "GraphQL Service Schematic mutation schematic",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
-      "description": "The name of the query service.",
+      "description": "The name of the mutation service.",
       "$default": {
         "$source": "argv",
         "index": 0

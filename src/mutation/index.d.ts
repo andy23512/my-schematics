@@ -1,2 +1,4 @@
 import { Rule } from '@angular-devkit/schematics';
-export declare function genMutation(_options: any): Rule;
+import { Schema } from './schema';
+export declare function addProvidersAndExportStatementToNgModule(_options: Schema): Rule;
+export declare function genMutation(_options: Schema): Rule;

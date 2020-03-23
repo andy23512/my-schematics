@@ -18,28 +18,18 @@ function readIntoSourceFile(host, modulePath) {
 }
 function addProvidersAndExportStatementToNgModule(_options) {
     return (_tree, _context) => {
-        console.log('nanoha');
         const modulePath = find_module_1.findModule(_tree, _options.path);
         let source = readIntoSourceFile(_tree, modulePath);
         const servicePath = `/${_options.path}/${core_1.strings.dasherize(_options.name)}-query.service`;
         const relativePath = find_module_1.buildRelativePath(modulePath, servicePath);
         const classifiedName = core_1.strings.classify(_options.name) + 'QueryService';
-        console.log('fate');
-        console.log('hayate');
         const importRecorder = _tree.beginUpdate(modulePath);
         const importServiceChange = ast_utils_1.insertImport(source, modulePath, classifiedName, relativePath);
-        console.log('hayate');
-        console.log(importServiceChange);
         importRecorder.insertLeft(importServiceChange.pos, importServiceChange.toAdd);
-        console.log('hayate');
         _tree.commitUpdate(importRecorder);
-        console.log('hayate');
-        console.log(source);
         source = readIntoSourceFile(_tree, modulePath);
         const addProviderRecorder = _tree.beginUpdate(modulePath);
-        console.log(source);
         const providersArray = tsquery_1.tsquery(source, 'Identifier[name=providers] ~ ArrayLiteralExpression', { visitAllChildren: true });
-        console.log(providersArray);
         addProviderRecorder.insertLeft(providersArray[0].end - 1, `\n         ${classifiedName},\n`);
         addProviderRecorder.insertLeft(importServiceChange.pos, importServiceChange.toAdd);
         _tree.commitUpdate(addProviderRecorder);

@@ -8,7 +8,8 @@
     },
     "mutation": {
       "description": "Generate Mutation Service",
-      "factory": "./mutation/index#genMutation"
+      "factory": "./mutation/index#genMutation",
+      "schema": "./mutation/schema.json"
     }
   }
 }
