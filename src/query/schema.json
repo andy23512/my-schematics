@@ -11,7 +11,13 @@
         "$source": "argv",
         "index": 0
       }
-    }
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the service.",
+      "visible": false
+    },
   },
   "required": ["name"]
 }

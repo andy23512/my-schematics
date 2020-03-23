@@ -6,7 +6,7 @@
     "build": "tsc -p tsconfig.json",
     "clean": "git checkout HEAD -- sandbox && git clean -f -d sandbox",
     "link:schematic": "yarn link && cd sandbox && yarn link \"akimbo-schematics\"",
-    "sandbox:ng-add": "cd sandbox && ng g akimbo-schematics:ng-add",
+    "sandbox:query": "cd sandbox && ng g akimbo-schematics:query",
     "test": "yarn clean && yarn sandbox:ng-add && yarn test:sandbox",
     "test:unit": "yarn build && jasmine src/**/*_spec.js",
     "test:sandbox": "cd sandbox && yarn lint && yarn test && yarn build"
@@ -26,8 +26,8 @@
     "typescript": "~3.7.4"
   },
   "devDependencies": {
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
+    "@types/node": "^12.11.1",
     "jasmine": "^3.5.0"
   }
 }
