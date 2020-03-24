@@ -5,6 +5,8 @@ import gql from 'graphql-tag';
 
 export const <%= upperCaseUnderscore(name) %>_QUERY_GQL = gql`
   query <%= classify(name) %> {
+    <%= camelize(name) %> {
+    }
   }
 `;
 
