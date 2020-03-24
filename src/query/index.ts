@@ -68,7 +68,7 @@ export function addProvidersAndExportStatementToNgModule(
     );
     addProviderRecorder.insertLeft(
       providersArray[0].end - 1,
-      `  ${classifiedName},\n       `
+      `  ${classifiedName},\n      `
     );
     _tree.commitUpdate(addProviderRecorder);
 
