@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const schematics_1 = require("@angular-devkit/schematics");
 const core_1 = require("@angular-devkit/core");
-const find_module_1 = require("@schematics/angular/utility/find-module");
-const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
+const schematics_1 = require("@angular-devkit/schematics");
 const tsquery_1 = require("@phenomnomnominal/tsquery");
+const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
+const find_module_1 = require("@schematics/angular/utility/find-module");
 function upperCaseUnderscore(value) {
     return core_1.strings.underscore(value).toUpperCase();
 }
@@ -34,7 +34,7 @@ function addProvidersAndExportStatementToNgModule(_options) {
         _tree.commitUpdate(addProviderRecorder);
         source = readIntoSourceFile(_tree, modulePath);
         const exportRecorder = _tree.beginUpdate(modulePath);
-        exportRecorder.insertLeft(source.end, `export { ${classifiedName} } from '${relativePath}'`);
+        exportRecorder.insertLeft(source.end, `export { ${classifiedName} } from '${relativePath}';\n`);
         _tree.commitUpdate(exportRecorder);
         return _tree;
     };

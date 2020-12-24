@@ -1,25 +1,31 @@
-import {
-  Rule,
-  SchematicContext,
-  Tree,
-  url,
-  apply,
-  mergeWith,
-  template,
-  move,
-  chain,
-  SchematicsException
-} from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
-import { Schema } from './schema';
 import {
-  findModule,
-  buildRelativePath
-} from '@schematics/angular/utility/find-module';
-import { insertImport } from '@schematics/angular/utility/ast-utils';
-import * as ts from 'typescript';
-import { InsertChange } from '@schematics/angular/utility/change';
+  apply,
+
+
+
+  chain, mergeWith,
+
+  move, Rule,
+  SchematicContext,
+
+
+
+
+
+
+
+  SchematicsException, template, Tree,
+  url
+} from '@angular-devkit/schematics';
 import { tsquery } from '@phenomnomnominal/tsquery';
+import { insertImport } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
+import {
+  buildRelativePath, findModule
+} from '@schematics/angular/utility/find-module';
+import * as ts from 'typescript';
+import { Schema } from './schema';
 
 function upperCaseUnderscore(value: string) {
   return strings.underscore(value).toUpperCase();
@@ -76,7 +82,7 @@ export function addProvidersAndExportStatementToNgModule(
     const exportRecorder = _tree.beginUpdate(modulePath);
     exportRecorder.insertLeft(
       source.end,
-      `export { ${classifiedName} } from '${relativePath}'`
+      `export { ${classifiedName} } from '${relativePath}';\n`
     );
     _tree.commitUpdate(exportRecorder);
 
