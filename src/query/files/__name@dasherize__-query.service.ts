@@ -12,9 +12,7 @@ export const <%= upperCaseUnderscore(name) %>_QUERY_GQL = gql`
 
 @Injectable()
 export class <%= classify(name) %>QueryService extends QueryService<
-  {
-    <%= camelize(name) %>: Query['<%= camelize(name) %>'];
-  },
+  Pick<Query, '<%= camelize(name) %>'>,
   Query<%= classify(name) %>Args
 > {
   public document = <%= upperCaseUnderscore(name) %>_QUERY_GQL;

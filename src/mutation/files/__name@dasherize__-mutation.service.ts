@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 @Injectable()
 export class <%= classify(name) %>MutationService extends MutationService<
-  Mutation['<%= camelize(name) %>Mutation'],
+  Pick<Mutation, '<%= camelize(name) %>Mutation'>,
   Mutation<%= classify(name) %>MutationArgs
 > {
   document = gql`
