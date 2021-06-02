@@ -1,31 +1,23 @@
-import { strings } from '@angular-devkit/core';
+import { strings } from "@angular-devkit/core";
 import {
   apply,
-
-
-
-  chain, mergeWith,
-
-  move, Rule,
+  chain,
+  mergeWith,
+  move,
+  Rule,
   SchematicContext,
-
-
-
-
-
-
-
-  SchematicsException, template, Tree,
-  url
-} from '@angular-devkit/schematics';
-import { tsquery } from '@phenomnomnominal/tsquery';
-import { insertImport } from '@schematics/angular/utility/ast-utils';
-import { InsertChange } from '@schematics/angular/utility/change';
+  SchematicsException,
+  template,
+  Tree,
+  url,
+} from "@angular-devkit/schematics";
+import { tsquery } from "@phenomnomnominal/tsquery";
 import {
-  buildRelativePath, findModule
-} from '@schematics/angular/utility/find-module';
-import * as ts from 'typescript';
-import { Schema } from './schema';
+  buildRelativePath,
+  findModule,
+} from "@schematics/angular/utility/find-module";
+import * as ts from "typescript";
+import { Schema } from "./schema";
 
 function upperCaseUnderscore(value: string) {
   return strings.underscore(value).toUpperCase();
@@ -36,7 +28,7 @@ function readIntoSourceFile(host: Tree, modulePath: string): ts.SourceFile {
   if (text === null) {
     throw new SchematicsException(`File ${modulePath} does not exist.`);
   }
-  const sourceText = text.toString('utf-8');
+  const sourceText = text.toString("utf-8");
   return tsquery.ast(sourceText);
 }
 
@@ -50,35 +42,8 @@ export function addProvidersAndExportStatementToNgModule(
       _options.name
     )}-query.service`;
     const relativePath = buildRelativePath(modulePath, servicePath);
-    const classifiedName = strings.classify(_options.name) + 'QueryService';
+    const classifiedName = strings.classify(_options.name) + "QueryService";
 
-    const importRecorder = _tree.beginUpdate(modulePath);
-    const importServiceChange = insertImport(
-      source,
-      modulePath,
-      classifiedName,
-      relativePath
-    ) as InsertChange;
-    importRecorder.insertLeft(
-      importServiceChange.pos,
-      importServiceChange.toAdd
-    );
-    _tree.commitUpdate(importRecorder);
-
-    source = readIntoSourceFile(_tree, modulePath);
-    const addProviderRecorder = _tree.beginUpdate(modulePath);
-    const providersArray = tsquery(
-      source,
-      'Identifier[name=providers] ~ ArrayLiteralExpression',
-      { visitAllChildren: true }
-    );
-    addProviderRecorder.insertLeft(
-      providersArray[0].end - 1,
-      `  ${classifiedName},\n      `
-    );
-    _tree.commitUpdate(addProviderRecorder);
-
-    source = readIntoSourceFile(_tree, modulePath);
     const exportRecorder = _tree.beginUpdate(modulePath);
     exportRecorder.insertLeft(
       source.end,
@@ -92,20 +57,20 @@ export function addProvidersAndExportStatementToNgModule(
 
 export function genQuery(_options: Schema): Rule {
   return (_: Tree, _context: SchematicContext) => {
-    const sourceTemplates = url('./files'); // 使用範本
+    const sourceTemplates = url("./files"); // 使用範本
 
     const sourceParametrizedTemplates = apply(sourceTemplates, [
       template({
         ..._options, // 使用者所輸入的參數
         ...strings,
-        upperCaseUnderscore
+        upperCaseUnderscore,
       }),
-      move(_options.path)
+      move(_options.path),
     ]);
 
     return chain([
       addProvidersAndExportStatementToNgModule(_options),
-      mergeWith(sourceParametrizedTemplates)
+      mergeWith(sourceParametrizedTemplates),
     ]);
   };
 }

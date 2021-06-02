@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query, Query<%= classify(name) %>Args } from '@frontend/interface';
-import { Query as QueryService } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { gql, Query as QueryService } from 'apollo-angular';
 
 export const <%= upperCaseUnderscore(name) %>_QUERY_GQL = gql`
   query <%= classify(name) %> {
@@ -10,7 +9,7 @@ export const <%= upperCaseUnderscore(name) %>_QUERY_GQL = gql`
   }
 `;
 
-@Injectable()
+@Injectable({provideIn: 'root'})
 export class <%= classify(name) %>QueryService extends QueryService<
   Pick<Query, '<%= camelize(name) %>'>,
   Query<%= classify(name) %>Args
