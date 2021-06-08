@@ -6,7 +6,7 @@ describe('<%= classify(name) %>MutationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: <%= classify(name) %>MutationService = TestBed.get(
+    const service: <%= classify(name) %>MutationService = TestBed.inject(
       <%= classify(name) %>MutationService
     );
     expect(service).toBeTruthy();
