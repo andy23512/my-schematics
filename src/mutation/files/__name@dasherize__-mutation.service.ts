@@ -5,7 +5,7 @@ import {
 } from '@frontend/interface';
 import { gql, Mutation as MutationService } from 'apollo-angular';
 
-@Injectable({provideIn: 'root'})
+@Injectable({providedIn: 'root'})
 export class <%= classify(name) %>MutationService extends MutationService<
   Pick<Mutation, '<%= camelize(name) %>Mutation'>,
   Mutation<%= classify(name) %>MutationArgs
