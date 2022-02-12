@@ -10,6 +10,11 @@
       "description": "Generate Mutation Service",
       "factory": "./mutation/index#genMutation",
       "schema": "./mutation/schema.json"
+    },
+    "component-store": {
+      "description": "Generate Component Store",
+      "factory": "./component-store/index#genComponentStore",
+      "schema": "./component-store/schema.json"
     }
   }
 }

@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "my-schematics-mutation",
-  "title": "My Schematics mutation schematic",
+  "id": "my-schematics component store",
+  "title": "My Schematics component store schematic",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
-      "description": "The name of the mutation service.",
+      "description": "The name of the component store.",
       "$default": {
         "$source": "argv",
         "index": 0
@@ -15,7 +15,7 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the service.",
+      "description": "The path to create the component store.",
       "visible": false
     }
   },

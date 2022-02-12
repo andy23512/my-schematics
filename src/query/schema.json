@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "id": "my-schematics-query",
-  "title": "GraphQL Service Schematic query schematic",
+  "title": "My Schematics query schematic",
   "type": "object",
   "properties": {
     "name": {
