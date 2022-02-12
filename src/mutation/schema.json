@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "graphql-service-schematics-query",
+  "id": "my-schematics-query",
   "title": "GraphQL Service Schematic mutation schematic",
   "type": "object",
   "properties": {
@@ -17,7 +17,7 @@
       "format": "path",
       "description": "The path to create the service.",
       "visible": false
-    },
+    }
   },
   "required": ["name"]
 }

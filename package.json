@@ -1,5 +1,5 @@
 {
-  "name": "graphql-service-schematics",
+  "name": "my-schematics",
   "version": "0.0.0",
   "description": "A blank schematics",
   "scripts": {
