@@ -1,20 +1,15 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "query": {
-      "description": "Generate Query Service",
-      "factory": "./query/index#genQuery",
-      "schema": "./query/schema.json"
-    },
-    "mutation": {
-      "description": "Generate Mutation Service",
-      "factory": "./mutation/index#genMutation",
-      "schema": "./mutation/schema.json"
-    },
     "component-store": {
       "description": "Generate Component Store",
       "factory": "./component-store/index#genComponentStore",
       "schema": "./component-store/schema.json"
+    },
+    "component": {
+      "description": "Generate Component",
+      "factory": "./component/index#genComponent",
+      "schema": "./component/schema.json"
     }
   }
 }

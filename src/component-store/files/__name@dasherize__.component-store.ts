@@ -5,5 +5,5 @@ export interface <%= classify(name) %>ComponentState {
 }
 
 @Injectable()
-export class <%= classify(name) %>ComponentStore extends ComponentStore<<%= classify(name) %>State> {
+export class <%= classify(name) %>ComponentStore extends ComponentStore<<%= classify(name) %>ComponentState> {
 }

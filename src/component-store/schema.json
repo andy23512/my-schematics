@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "my-schematics component store",
+  "$id": "my-schematics component store",
   "title": "My Schematics component store schematic",
   "type": "object",
   "properties": {
