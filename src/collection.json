@@ -10,6 +10,11 @@
       "description": "Generate Component",
       "factory": "./component/index#genComponent",
       "schema": "./component/schema.json"
+    },
+    "directive": {
+      "description": "Generate Directive",
+      "factory": "./directive/index#genDirective",
+      "schema": "./directive/schema.json"
     }
   }
 }

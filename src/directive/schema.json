@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "my-schematics directive",
+  "title": "My Schematics directive schematic",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the directive.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the directive.",
+      "visible": false
+    }
+  },
+  "required": ["name"]
+}
