@@ -22,18 +22,19 @@ function addImportAndDeclarationToModule(_options) {
         const componentPath = `/${_options.path}/${core_1.strings.dasherize(_options.name)}.component`;
         const relativePath = (0, find_module_1.buildRelativePath)(modulePath, componentPath);
         const classifiedName = core_1.strings.classify(_options.name) + "Component";
-        const classDeclaration = source.statements.find(node => ts.isClassDeclaration(node));
+        const classDeclaration = source.statements.find((node) => ts.isClassDeclaration(node));
         const decorator = ts.getDecorators(classDeclaration)[0];
         const callExpression = decorator.expression;
-        const objectLiteralExpression = callExpression.arguments[0];
+        const objectLiteralExpression = callExpression
+            .arguments[0];
         const propertyAssignment = objectLiteralExpression.properties.find((property) => {
-            return property.name.text === 'declarations';
+            return property.name.text === "declarations";
         });
         const arrayLiteralExpression = propertyAssignment.initializer;
         const identifier = arrayLiteralExpression.elements[arrayLiteralExpression.elements.length - 1];
         const updateRecorder = _tree.beginUpdate(modulePath);
         const changeText = identifier.getFullText(source);
-        let toInsert = '';
+        let toInsert = "";
         if (changeText.match(/^\r?\r?\n/)) {
             toInsert = `,${changeText.match(/^\r?\n\s*/)[0]}${classifiedName}`;
         }
@@ -41,7 +42,7 @@ function addImportAndDeclarationToModule(_options) {
             toInsert = `, ${classifiedName}`;
         }
         updateRecorder.insertLeft(identifier.end, toInsert);
-        const allImports = source.statements.filter(node => ts.isImportDeclaration(node));
+        const allImports = source.statements.filter((node) => ts.isImportDeclaration(node));
         let lastImport;
         for (const importNode of allImports) {
             if (!lastImport || importNode.getStart() > lastImport.getStart()) {
@@ -58,15 +59,17 @@ exports.addImportAndDeclarationToModule = addImportAndDeclarationToModule;
 function genComponent(_options) {
     return (_, _context) => {
         _options.name = (0, path_1.basename)(_options.name);
-        _options.path = (0, path_1.normalize)(_options.path + '/' + _options.name);
+        _options.path = (0, path_1.normalize)(_options.path + "/" + _options.name);
         const sourceTemplates = (0, schematics_1.url)("./files"); // 使用範本
         const sourceParametrizedTemplates = (0, schematics_1.apply)(sourceTemplates, [
             (0, schematics_1.template)(Object.assign(Object.assign({}, _options), core_1.strings)),
             (0, schematics_1.move)(_options.path),
         ]);
         return (0, schematics_1.chain)([
-            addImportAndDeclarationToModule(_options),
-            (0, schematics_1.mergeWith)(sourceParametrizedTemplates)
+            ...(_options.standalone
+                ? []
+                : [addImportAndDeclarationToModule(_options)]),
+            (0, schematics_1.mergeWith)(sourceParametrizedTemplates),
         ]);
     };
 }
