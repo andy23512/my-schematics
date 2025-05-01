@@ -1,20 +1,20 @@
 import { strings } from "@angular-devkit/core";
 import {
-	apply,
-	chain,
-	mergeWith,
-	move,
-	Rule,
-	SchematicContext,
-	SchematicsException,
-	template,
-	Tree,
-	url,
+  apply,
+  chain,
+  mergeWith,
+  move,
+  Rule,
+  SchematicContext,
+  SchematicsException,
+  template,
+  Tree,
+  url,
 } from "@angular-devkit/schematics";
 import { tsquery } from "@phenomnomnominal/tsquery";
 import {
-	buildRelativePath,
-	findModule,
+  buildRelativePath,
+  findModule,
 } from "@schematics/angular/utility/find-module";
 import { basename, normalize } from "path";
 import { Schema } from "./schema";
@@ -26,12 +26,10 @@ function readIntoSourceFile(host: Tree, modulePath: string) {
     throw new SchematicsException(`File ${modulePath} does not exist.`);
   }
   const sourceText = text.toString("utf-8");
-	return tsquery.ast(sourceText);
+  return tsquery.ast(sourceText);
 }
 
-export function addImportAndDeclarationToModule(
-  _options: Schema
-): Rule {
+export function addImportAndDeclarationToModule(_options: Schema): Rule {
   return (_tree: Tree, _context: SchematicContext) => {
     const modulePath = findModule(_tree, _options.path);
     let source = readIntoSourceFile(_tree, modulePath);
@@ -41,20 +39,27 @@ export function addImportAndDeclarationToModule(
     const relativePath = buildRelativePath(modulePath, directivePath);
     const classifiedName = strings.classify(_options.name) + "Directive";
 
-
-    const classDeclaration = source.statements.find( node => ts.isClassDeclaration(node) )! as ts.ClassDeclaration;
+    const classDeclaration = source.statements.find((node) =>
+      ts.isClassDeclaration(node)
+    )! as ts.ClassDeclaration;
     const decorator = ts.getDecorators(classDeclaration)![0] as ts.Decorator;
     const callExpression = decorator.expression as ts.CallExpression;
-    const objectLiteralExpression = callExpression.arguments[0] as ts.ObjectLiteralExpression;
-    const propertyAssignment = objectLiteralExpression.properties.find((property: ts.PropertyAssignment) => {
-      return (property.name as ts.Identifier).text === 'declarations'
-    })! as ts.PropertyAssignment;
-    const arrayLiteralExpression = propertyAssignment.initializer as ts.ArrayLiteralExpression;
-    const identifier = arrayLiteralExpression.elements[arrayLiteralExpression.elements.length - 1] as ts.Identifier;
+    const objectLiteralExpression = callExpression
+      .arguments[0] as ts.ObjectLiteralExpression;
+    const propertyAssignment = objectLiteralExpression.properties.find(
+      (property: ts.PropertyAssignment) => {
+        return (property.name as ts.Identifier).text === "declarations";
+      }
+    )! as ts.PropertyAssignment;
+    const arrayLiteralExpression =
+      propertyAssignment.initializer as ts.ArrayLiteralExpression;
+    const identifier = arrayLiteralExpression.elements[
+      arrayLiteralExpression.elements.length - 1
+    ] as ts.Identifier;
 
     const updateRecorder = _tree.beginUpdate(modulePath);
     const changeText = identifier.getFullText(source);
-    let toInsert = '';
+    let toInsert = "";
     if (changeText.match(/^\r?\r?\n/)) {
       toInsert = `,${changeText.match(/^\r?\n\s*/)![0]}${classifiedName}`;
     } else {
@@ -62,10 +67,12 @@ export function addImportAndDeclarationToModule(
     }
     updateRecorder.insertLeft(identifier.end, toInsert);
 
-    const allImports = source.statements.filter( node => ts.isImportDeclaration(node) )! as ts.ImportDeclaration[];
+    const allImports = source.statements.filter((node) =>
+      ts.isImportDeclaration(node)
+    )! as ts.ImportDeclaration[];
     let lastImport: ts.Node | undefined;
     for (const importNode of allImports) {
-      if ( !lastImport || importNode.getStart() > lastImport.getStart() ) {
+      if (!lastImport || importNode.getStart() > lastImport.getStart()) {
         lastImport = importNode;
       }
     }
@@ -80,8 +87,8 @@ export function addImportAndDeclarationToModule(
 
 export function genDirective(_options: Schema): Rule {
   return (_: Tree, _context: SchematicContext) => {
-		_options.name = basename(_options.name);
-    _options.path = normalize(_options.path + '/' + _options.name);
+    _options.name = basename(_options.name);
+    _options.path = normalize(_options.path + "/" + _options.name);
     const sourceTemplates = url("./files"); // 使用範本
 
     const sourceParametrizedTemplates = apply(sourceTemplates, [
@@ -93,7 +100,10 @@ export function genDirective(_options: Schema): Rule {
     ]);
 
     return chain([
-			addImportAndDeclarationToModule(_options),
-			mergeWith(sourceParametrizedTemplates)]);
+      ...(_options.standalone
+        ? []
+        : [addImportAndDeclarationToModule(_options)]),
+      mergeWith(sourceParametrizedTemplates),
+    ]);
   };
 }
