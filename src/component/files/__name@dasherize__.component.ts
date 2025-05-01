@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: '-<%= dasherize(name) %>',<% if(standalone) {%>
-  imports: [],<%} else { %>
-  standalone: false,<% }%>
+  standalone: true,<% }%>
   templateUrl: '<%= dasherize(name) %>.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -2,9 +2,7 @@ import { Directive } from '@angular/core';
 
 @Directive({
   selector: '[<%= classify(name) %>]',<% if(standalone) {%>
-  imports: [],<%} else { %>
-  standalone: false,<% }%>
+  standalone: true,<% }%>
 })
 export class <%= classify(name) %>Directive {
-  constructor() { }
 }
