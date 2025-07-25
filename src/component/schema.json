@@ -20,7 +20,7 @@
     },
     "standalone": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Flag to indicate whether generate a standalone component",
       "alias": "s"
     }
